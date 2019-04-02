@@ -1,0 +1,1 @@
+SELECT * FROM cost_of_living;
