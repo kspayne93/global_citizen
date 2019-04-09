@@ -6,6 +6,8 @@ export default class Cities extends Component {
    state = {
       cities: [],
       search: '',
+      currentPage: 1,
+      citiesPerPage: 20,
    }
 
    componentDidMount = async () => {
@@ -17,8 +19,25 @@ export default class Cities extends Component {
       await this.setState({ search: input });
    }
 
+   handlePageChange = async (increment) => {
+      await this.setState({ currentPage: this.state.currentPage + increment })
+      if(this.state.currentPage < 1) {
+         this.setState({ currentPage: 1 })
+      } else if(this.state.currentPage >=30) {
+         this.setState({ currentPage: 29 })
+      }
+      console.log(
+         `%cPage Number: %c${this.state.currentPage}`,
+         'color: teal', 'color: yellow'
+         )
+   }
+
    render() {
-      let citiesArray = this.state.cities;
+      const { cities, currentPage, citiesPerPage } = this.state;
+      let indexOfLastCity = currentPage * citiesPerPage;
+      let indexOfFirstCity = indexOfLastCity - citiesPerPage;
+      let currentCities = cities.slice(indexOfFirstCity, indexOfLastCity)
+      let citiesArray = currentCities;
       if(this.state.search) {
          citiesArray = this.state.cities.filter((object, index) => {
             if(object.city.toLowerCase().includes(this.state.search.toLowerCase()) || object.country.toLowerCase().includes(this.state.search.toLowerCase())) return true; //filters by city and country
@@ -57,6 +76,8 @@ export default class Cities extends Component {
          <div>
             <h1>Cities</h1>
             <input type="text" placeholder='search' onChange={ (e) => this.handleSearch(e.target.value) } />
+            <button onClick={() => this.handlePageChange(-1)}>Previous Page</button>
+            <button onClick={() => this.handlePageChange(1)}>Next Page</button>
             {displayCities}
          </div>
       )
