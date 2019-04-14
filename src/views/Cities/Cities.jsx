@@ -21,15 +21,15 @@ export default class Cities extends Component {
 
    handlePageChange = async (increment) => {
       await this.setState({ currentPage: this.state.currentPage + increment })
-      if(this.state.currentPage < 1) {
+      if (this.state.currentPage < 1) {
          this.setState({ currentPage: 1 })
-      } else if(this.state.currentPage >=30) {
+      } else if (this.state.currentPage >= 30) {
          this.setState({ currentPage: 29 })
       }
       console.log(
          `%cPage Number: %c${this.state.currentPage}`,
          'color: teal', 'color: yellow'
-         )
+      )
    }
 
    render() {
@@ -38,15 +38,15 @@ export default class Cities extends Component {
       let indexOfFirstCity = indexOfLastCity - citiesPerPage;
       let currentCities = cities.slice(indexOfFirstCity, indexOfLastCity)
       let citiesArray = currentCities;
-      if(this.state.search) {
+      if (this.state.search) {
          citiesArray = this.state.cities.filter((object, index) => {
-            if(object.city.toLowerCase().includes(this.state.search.toLowerCase()) || object.country.toLowerCase().includes(this.state.search.toLowerCase())) return true; //filters by city and country
+            if (object.city.toLowerCase().includes(this.state.search.toLowerCase()) || object.country.toLowerCase().includes(this.state.search.toLowerCase())) return true; //filters by city and country
             else return false;
          })
       }
 
 
-      let displayCities = citiesArray.map( city => {
+      let displayCities = citiesArray.map(city => {
          return (
             <div key={city.id}>
                <h3>{city.city}</h3>
@@ -75,7 +75,7 @@ export default class Cities extends Component {
       return (
          <div>
             <h1>Cities</h1>
-            <input type="text" placeholder='search' onChange={ (e) => this.handleSearch(e.target.value) } />
+            <input type="text" placeholder='search' onChange={(e) => this.handleSearch(e.target.value)} />
             <button onClick={() => this.handlePageChange(-1)}>Previous Page</button>
             <button onClick={() => this.handlePageChange(1)}>Next Page</button>
             {displayCities}
