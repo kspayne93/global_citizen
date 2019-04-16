@@ -72,6 +72,7 @@ export default class Cities extends Component {
             </div>
          )
       })
+      
       return (
          <div>
             <h1>Cities</h1>
