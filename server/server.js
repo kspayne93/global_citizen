@@ -20,7 +20,6 @@ massive(CONNECTION_STRING).then( db => {
 })
 
 //ENDPOINTS
-
 // Get all cities
 app.get('/api/cities', async (req, res) => {
    const db = req.app.get('db');
